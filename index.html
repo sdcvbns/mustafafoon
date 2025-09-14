@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شاشة تحميل</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- الصفحة الأولى -->
+  <div id="page1" class="page active">
+    <div class="spinner"></div>
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- الصفحة الثانية -->
+  <div id="page2" class="page">
+    <div class="companies">
+      <div class="card" onclick="selectCompany('realme')">Realme</div>
+      <div class="card" onclick="selectCompany('oppo')">Oppo</div>
+      <div class="card" onclick="selectCompany('samsung')">Samsung</div>
+      <div class="card" onclick="selectCompany('xiaomi')">Xiaomi</div>
+      <div class="card" onclick="selectCompany('huawei')">Huawei</div>
+      <div class="card" onclick="selectCompany('infinix')">Infinix</div>
+      <div class="card" onclick="selectCompany('tecno')">Tecno</div>
+      <div class="card" onclick="selectCompany('vivo')">Vivo</div>
+      <div class="card" onclick="selectCompany('itel')">Itel</div>
+      <div class="card" onclick="selectCompany('lava')">Lava</div>
+      <div class="card" onclick="selectCompany('nokia')">Nokia</div>
+      <div class="card" onclick="selectCompany('sony')">Sony</div>
+      <div class="card" onclick="selectCompany('htc')">HTC</div>
+      <div class="card" onclick="selectCompany('lenovo')">Lenovo</div>
+      <div class="card" onclick="selectCompany('motorola')">Motorola</div>
+      <div class="card" onclick="selectCompany('meizu')">Meizu</div>
+      <div class="card" onclick="selectCompany('asus')">Asus</div>
+      <div class="card" onclick="selectCompany('honor')">Honor</div>
+      <div class="card" onclick="selectCompany('google')">Google</div>
+      <div class="card" onclick="selectCompany('sharp')">Sharp</div>
+      <div class="card" onclick="selectCompany('alcatel')">Alcatel</div>
+      <div class="card" onclick="selectCompany('oneplus')">OnePlus</div>
+    </div>
+  </div>
+
+  <!-- الصفحة الثالثة -->
+  <div id="page3" class="page">
+    <div class="options">
+      <div class="card" onclick="goToPage(4)">أسعار الشاشات</div>
+      <div class="card">أسعار البطاريات</div>
+    </div>
+    <button class="back-button" onclick="goToPage(2)">رجوع</button>
+  </div>
+
+  <!-- الصفحة الرابعة -->
+  <div id="page4" class="page">
+    <div class="search-box">
+      <input type="text" placeholder="ابحث عن الجهاز..." oninput="searchPrice(this.value)">
+      <div class="result" id="result"></div>
+      <button class="back-button" onclick="goToPage(3)">رجوع</button>
+    </div>
+  </div>
+
+  <script>
+    function goToPage(number) {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`page${i}`).classList.remove('active');
+      }
+      document.getElementById(`page${number}`).classList.add('active');
+    }
+
+    window.onload = function () {
+      setTimeout(() => {
+        goToPage(2);
+      }, 3000);
+    };
+
+    let selectedCompany = '';
+
+    function selectCompany(company) {
+      selectedCompany = company.toLowerCase();
+      goToPage(3);
+    }
+
+    const prices = {
+      realme: {
+        "realme 7i": 13000, "c17": 13000, "realme 5": 13000, "realme 5i": 13000,
+        "realme 6i": 13000, "c3": 13000, "narzo 10a": 13000, "narzo 20a": 13000,
+        "c55": 16000, "c67 5g": 16000, "realme 11 5g": 16000, "realme 11x 5g": 16000,
+        "narzo n55": 16000, "c51": 13000, "c53": 13000, "narzo n53": 13000,
+        "realme not 50": 13000, "c60": 13000, "realme 8 incel": 14000,
+        "realme 8 pro": 14000, "realme 7 pro": 14000, "realme 6": 16000,
+        "realme 7": 16000, "c67 4g": 15000, "c65 5g": 15000, "c65 4g": 15000,
+        "narzo n65 5g": 15000, "realme 12 5g": 15000, "realme 12x 5g": 15000,
+        "narzo 70x 5g": 15000, "realme 13 5g": 15000, "c30s": 14000,
+        "narzo 50i prime": 14000, "c25": 13000, "c25s": 13000, "c11 2021": 13000,
+        "c20": 13000, "c21": 13000, "narzo 50i": 13000, "c33": 13000, "c30": 13000,
+        "c12": 12000, "c15": 12000, "c11 2020": 12000
+      },
+      oppo: {
+        "oppo a53": 13000, "oppo a32": 13000, "oppo a33": 13000, "oppo a53s": 13000,
+        "oppo a5": 13000, "oppo a9": 13000, "oppo a12": 13000, "oppo a31": 13000,
+        "oppo a11": 13000, "oppo a51": 13000, "oppo a15": 12000, "oppo a15s": 12000,
+        "oppo a58 4g": 16000, "oppo a16": 12000, "oppo a16k": 12000, "oppo a16s": 12000,
+        "oppo a54s": 12000, "oppo a56": 12000, "oppo a55 5g": 12000, "oppo a94": 14000,
+        "oppo a95": 14000, "oppo a18": 14000, "oppo a17": 14000, "oppo a28": 14000,
+        "oppo a57": 14000, "oppo a58": 14000, "oppo a76": 14000, "oppo a77": 14000,
+        "oppo a77s": 14000, "oppo a78": 14000, "oppo a38": 14000, "oppo a17k": 14000,
+        "oppo a97": 14000, "oppo a57s": 14000, "oppo a60": 15000
+      }
+    };
+
+    function searchPrice(query) {
+      const resultDiv = document.getElementById("result");
+      const value = query.trim().toLowerCase();
+      resultDiv.innerHTML = '';
+
+      if (!value) return;
+
+      const list = prices[selectedCompany] || {};
+      const match = Object.entries(list).filter(([model]) =>
+        model.toLowerCase().startsWith(value)
+      );
+
+      if (match.length > 0) {
+        const [model, price] = match[0];
+        resultDiv.textContent = `${model} - ${price.toLocaleString()} دينار عراقي`;
+      }
+    }
+  </script>
+</body>
+</html>
