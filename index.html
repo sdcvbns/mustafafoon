@@ -1,134 +1,699 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شاشة تحميل</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>أسعار الشاشات والبطاريات وقطع الغيار</title>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #004d40; /* Dark Green */
+    --secondary-color: #26a69a; /* Light Teal */
+    --accent-color: #ffb74d; /* Golden Orange */
+    --bg-color-light: #f5fcf9; /* Very light mint/green */
+    --bg-color-dark: #e8f5e9; /* Slightly darker mint */
+    --text-color-dark: #212121; /* Dark Grey */
+    --text-color-light: #ffffff;
+    --card-bg: #ffffff;
+    --border-color: #bdbdbd;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  body {
+    font-family: 'Changa', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-color-light);
+    color: var(--text-color-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 3rem 1.5rem;
+    position: relative;
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+
+  .admin-dot {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    width: 30px;
+    height: 30px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+  }
+
+  .admin-dot:hover {
+    transform: scale(1.15) rotate(15deg);
+    box-shadow: 0 0 18px var(--accent-color);
+  }
+
+  main {
+    flex-grow: 1;
+    padding: 0 1rem;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-medium);
+    padding: 2.5rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .container:focus-within {
+    box-shadow: 0 0 0 4px var(--secondary-color), var(--shadow-medium);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+  }
+
+  select, input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1.05rem;
+    margin-bottom: 1.75rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--border-color);
+    outline: none;
+    box-sizing: border-box;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  select:focus, input[type="text"]:focus, input[type="number"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 77, 64, 0.2);
+    background-color: var(--card-bg);
+  }
+
+  #searchInput, #adminSearchInput {
+    margin-top: -0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .list {
+    background: var(--bg-color-dark);
+    border-radius: 1rem;
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+  }
+
+  .item {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--card-bg);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color-dark);
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .item:last-child {
+    margin-bottom: 0;
+  }
+
+  .item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .item .name {
+    flex-grow: 1;
+    font-size: 1.05rem;
+  }
+
+  .item .price {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    margin-right: 0.5rem;
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .button:hover {
+    background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    box-shadow: 0 10px 20px rgba(0, 77, 64, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .button:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .button.btn-back {
+    background: #9ca3af;
+  }
+  .button.btn-back:hover {
+    background: #6b7280;
+    box-shadow: 0 10px 20px rgba(156, 163, 175, 0.3);
+  }
+
+  #adminPage {
+    display: none;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-medium);
+    padding: 2.5rem;
+  }
+
+  #adminPage h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .admin-list-container {
+    margin-top: 2rem;
+    max-height: 450px;
+    overflow-y: auto;
+    border-top: 2px solid var(--secondary-color);
+    padding-top: 1rem;
+    background: var(--bg-color-dark);
+    border-radius: 0.75rem;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .admin-list-header, .admin-list-row {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    margin-bottom: 0.5rem;
+    border-radius: 0.6rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .admin-list-header {
+    background: var(--secondary-color);
+    color: var(--text-color-light);
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-medium);
+  }
+  .admin-list-row:hover {
+    background-color: var(--bg-color-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .admin-list-header > div, .admin-list-row > div {
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 0.25rem;
+  }
+  .admin-list-header > div:nth-child(1), .admin-list-row > div:nth-child(1) { flex: 2; text-align: right; }
+  .admin-list-header > div:nth-child(2), .admin-list-row > div:nth-child(2) { flex: 1.2; }
+  .admin-list-header > div:nth-child(3), .admin-list-row > div:nth-child(3) { flex: 1; }
+  .admin-list-header > div:nth-child(4), .admin-list-row > div:nth-child(4) { flex: 1; }
+  .admin-list-header > div:nth-child(5), .admin-list-row > div:nth-child(5) { flex: 0.8; }
+  .admin-list-header > div:nth-child(6), .admin-list-row > div:nth-child(6) { flex: 0.8; }
+
+
+  .admin-list-row .btn-action {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 0.6rem;
+    box-shadow: none;
+    width: auto;
+    margin: 0 0.1rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .admin-list-row .btn-edit { background-color: #10b981; }
+  .admin-list-row .btn-edit:hover { background-color: #059669; }
+  .admin-list-row .btn-delete { background-color: #ef4444; }
+  .admin-list-row .btn-delete:hover { background-color: #dc2626; }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+    background: var(--primary-color);
+    color: var(--text-color-light);
+    font-size: 0.9rem;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    header h1 { font-size: 2rem; }
+    header p { font-size: 1rem; }
+    .admin-dot { left: 1rem; top: 1rem; width: 25px; height: 25px; font-size: 1rem;}
+    .container, #adminPage {
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+    }
+    label { font-size: 1rem; }
+    select, input[type="text"], input[type="number"], .button {
+      padding: 0.8rem 1rem;
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+    .item { padding: 0.8rem 1rem; font-size: 0.95rem; }
+    .item .price { font-size: 1.1rem; }
+    #adminPage h2 { font-size: 1.5rem; }
+    .admin-list-header > div, .admin-list-row > div { font-size: 0.85rem; padding: 0 0.1rem; }
+    .admin-list-row .btn-action { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
+  }
+
+  @media (max-width: 480px) {
+    header { padding: 2rem 1rem; margin-bottom: 1.5rem;}
+    header h1 { font-size: 1.8rem; }
+    header p { font-size: 0.85rem; }
+    .admin-dot { left: 0.8rem; top: 0.8rem; width: 20px; height: 20px; font-size: 0.9rem;}
+    .container, #adminPage {
+      margin: 1rem auto;
+      padding: 1rem;
+      border-radius: 0.75rem;
+    }
+    label { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    select, input[type="text"], input[type="number"], .button {
+      padding: 0.7rem 0.8rem;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      border-radius: 0.6rem;
+    }
+    .list { padding: 1rem; border-radius: 0.75rem;}
+    .item { padding: 0.7rem 0.8rem; font-size: 0.9rem; margin-bottom: 0.5rem; border-radius: 0.6rem;}
+    .item .price { font-size: 1rem; }
+    .button { margin-top: 1rem; border-radius: 0.6rem;}
+    #adminPage h2 { font-size: 1.3rem; margin-bottom: 1rem;}
+    .admin-list-container { padding-top: 0.8rem; border-radius: 0.6rem;}
+    .admin-list-header, .admin-list-row { padding: 0.6rem 0.5rem; margin-bottom: 0.4rem; border-radius: 0.5rem;}
+    .admin-list-header { border-radius: 0.6rem;}
+    .admin-list-header > div, .admin-list-row > div { font-size: 0.75rem; }
+    .admin-list-row .btn-action { padding: 0.3rem 0.5rem; font-size: 0.7rem; border-radius: 0.4rem; margin: 0 0.05rem;}
+  }
+</style>
 </head>
 <body>
-  <!-- الصفحة الأولى -->
-  <div id="page1" class="page active">
-    <div class="spinner"></div>
-    <div class="dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
+
+<header>
+  <div class="admin-dot" onclick="openAdmin()"></div>
+  <h1>مصطفى فون</h1>
+  <p>أسعار الشاشات والبطاريات وقطع الغيار</p>
+  <p>للتواصل: 07755008832 </p>
+</header>
+
+<main>
+  <div class="container" id="customerPage">
+    <label for="brandSelect">اختر الشركة:</label>
+    <select id="brandSelect" onchange="onBrandOrTypeChange()">
+      <option value="" disabled selected>اختر الشركة</option>
+      <option>ايفون</option>
+      <option>سامسونج</option>
+      <option>شاومي</option>
+      <option>هواوي- هونر</option>
+      <option>اوبو</option>
+      <option>فيفو</option>
+      <option>انفنكس- تكنو</option>
+      <option>ريلمي</option>
+      <option>آيتل</option>
+      <option>ايباد</option>
+      <option>###</option>
+    </select>
+
+    <label for="typeSelect">اختر النوع:</label>
+    <select id="typeSelect" onchange="onBrandOrTypeChange()" disabled>
+      <option value="" disabled selected>اختر النوع</option>
+      <option>شاشة</option>
+      <option>بطارية</option>
+      <option>قطع غيار</option>
+    </select>
+
+    <input type="text" id="searchInput" placeholder="ابحث هنا عن الموديل أو القطعة..." oninput="renderList()" style="display:none;">
+    <div class="list" id="productsList"></div>
   </div>
 
-  <!-- الصفحة الثانية -->
-  <div id="page2" class="page">
-    <div class="companies">
-      <div class="card" onclick="selectCompany('realme')">Realme</div>
-      <div class="card" onclick="selectCompany('oppo')">Oppo</div>
-      <div class="card" onclick="selectCompany('samsung')">Samsung</div>
-      <div class="card" onclick="selectCompany('xiaomi')">Xiaomi</div>
-      <div class="card" onclick="selectCompany('huawei')">Huawei</div>
-      <div class="card" onclick="selectCompany('infinix')">Infinix</div>
-      <div class="card" onclick="selectCompany('tecno')">Tecno</div>
-      <div class="card" onclick="selectCompany('vivo')">Vivo</div>
-      <div class="card" onclick="selectCompany('itel')">Itel</div>
-      <div class="card" onclick="selectCompany('lava')">Lava</div>
-      <div class="card" onclick="selectCompany('nokia')">Nokia</div>
-      <div class="card" onclick="selectCompany('sony')">Sony</div>
-      <div class="card" onclick="selectCompany('htc')">HTC</div>
-      <div class="card" onclick="selectCompany('lenovo')">Lenovo</div>
-      <div class="card" onclick="selectCompany('motorola')">Motorola</div>
-      <div class="card" onclick="selectCompany('meizu')">Meizu</div>
-      <div class="card" onclick="selectCompany('asus')">Asus</div>
-      <div class="card" onclick="selectCompany('honor')">Honor</div>
-      <div class="card" onclick="selectCompany('google')">Google</div>
-      <div class="card" onclick="selectCompany('sharp')">Sharp</div>
-      <div class="card" onclick="selectCompany('alcatel')">Alcatel</div>
-      <div class="card" onclick="selectCompany('oneplus')">OnePlus</div>
-    </div>
-  </div>
+  <div id="adminPage" class="container">
+    <h2>لوحة التحكم</h2>
+    <label for="adminBrand">الشركة:</label>
+    <select id="adminBrand">
+      <option disabled selected>اختر الشركة</option>
+      <option>ايفون</option>
+      <option>سامسونج</option>
+      <option>شاومي</option>
+      <option>هواوي- هونر</option>
+      <option>اوبو</option>
+      <option>فيفو</option>
+      <option>انفنكس- تكنو</option>
+      <option>ريلمي</option>
+      <option>آيتل</option>
+      <option>##</option>
+    </select>
+    <label for="adminName">اسم القطعة أو الموديل:</label>
+    <input type="text" id="adminName" placeholder="مثال: شاشة ايفون X اصلية" />
+    <label for="adminPrice">السعر:</label>
+    <input type="number" id="adminPrice" placeholder="مثال: 120000" />
+    <label for="adminType">النوع:</label>
+    <select id="adminType">
+      <option disabled selected>اختر النوع</option>
+      <option>شاشة</option>
+      <option>بطارية</option>
+      <option>قطع غيار</option>
+    </select>
+    <button class="button" onclick="addItem()">إضافة عنصر جديد</button>
+    <button class="button btn-back" onclick="closeAdmin()">العودة لصفحة الزبائن</button>
 
-  <!-- الصفحة الثالثة -->
-  <div id="page3" class="page">
-    <div class="options">
-      <div class="card" onclick="goToPage(4)">أسعار الشاشات</div>
-      <div class="card">أسعار البطاريات</div>
-    </div>
-    <button class="back-button" onclick="goToPage(2)">رجوع</button>
+    <input type="text" id="adminSearchInput" placeholder="ابحث في قائمة الأدمن..." oninput="renderAdminList()">
+    <div class="admin-list-container" id="adminList"></div>
   </div>
+</main>
 
-  <!-- الصفحة الرابعة -->
-  <div id="page4" class="page">
-    <div class="search-box">
-      <input type="text" placeholder="ابحث عن الجهاز..." oninput="searchPrice(this.value)">
-      <div class="result" id="result"></div>
-      <button class="back-button" onclick="goToPage(3)">رجوع</button>
-    </div>
-  </div>
+<footer>
+  جميع الحقوق محفوظة &copy; مصطفى فون 07755008832 2025
+</footer>
 
-  <script>
-    function goToPage(number) {
-      for (let i = 1; i <= 4; i++) {
-        document.getElementById(`page${i}`).classList.remove('active');
+<script>
+  const apiUrl = "https://script.google.com/macros/s/AKfycbyx6Qp3fgSD0hCghApcgUqAG59KixcBbLwVQWj1ti4_L082XJJJbKi2_MtEqRvWjZuB6g/exec";
+  let allData = [];
+
+  async function fetchData() {
+    try {
+      const res = await fetch(apiUrl);
+      allData = await res.json();
+      document.getElementById('typeSelect').disabled = false;
+      if (document.getElementById('adminPage').style.display === 'block') {
+        renderAdminList();
       }
-      document.getElementById(`page${number}`).classList.add('active');
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      alert("حدث خطأ أثناء جلب البيانات. يرجى المحاولة لاحقًا.");
+    }
+  }
+
+  function onBrandOrTypeChange() {
+    const brand = document.getElementById('brandSelect').value;
+    const type = document.getElementById('typeSelect').value;
+    const searchInput = document.getElementById('searchInput');
+    const productsList = document.getElementById('productsList');
+
+    if (brand && type) {
+      searchInput.style.display = 'block';
+      renderList();
+    } else {
+      searchInput.style.display = 'none';
+      productsList.innerHTML = '<p style="padding:1rem; color:#888; text-align:center;">يرجى اختيار الشركة والنوع لعرض المنتجات.</p>';
+    }
+  }
+
+  function clean(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/[\u200E\u200F\u00A0]/g, '').trim().toLowerCase();
+  }
+
+  function renderList() {
+    const selectedBrand = document.getElementById('brandSelect').value;
+    const selectedType = document.getElementById('typeSelect').value;
+    const query = document.getElementById('searchInput').value.toLowerCase();
+
+    const productsList = document.getElementById('productsList');
+    productsList.innerHTML = '';
+
+    if (!selectedBrand || !selectedType) return;
+
+    const filtered = allData.slice(1).filter(row => {
+      if (row.length < 4) return false;
+      const itemName = row[0];
+      const itemType = row[2];
+      const itemBrand = row[3];
+
+      const cleanedItemBrand = clean(itemBrand);
+      const cleanedItemType = clean(itemType);
+      const cleanedItemName = clean(itemName);
+
+      const cleanedSelectedBrand = clean(selectedBrand);
+      const cleanedSelectedType = clean(selectedType);
+
+      return cleanedItemBrand === cleanedSelectedBrand &&
+             cleanedItemType === cleanedSelectedType &&
+             cleanedItemName.includes(clean(query));
+    });
+
+    if (filtered.length === 0) {
+      productsList.innerHTML = '<p style="padding:1rem; color:#888; text-align:center;">لا توجد نتائج مطابقة لبحثك.</p>';
+      return;
     }
 
-    window.onload = function () {
-      setTimeout(() => {
-        goToPage(2);
-      }, 3000);
-    };
+    filtered.forEach(row => {
+      const [name, price] = row;
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `<div class="name">${name}</div><div class="price">${formatPrice(price)}</div>`;
+      productsList.appendChild(div);
+    });
+  }
 
-    let selectedCompany = '';
+  function formatPrice(price) {
+    return Number(price).toLocaleString('en-US') + ' د.ع';
+  }
 
-    function selectCompany(company) {
-      selectedCompany = company.toLowerCase();
-      goToPage(3);
+  async function addItem() {
+    const brand = document.getElementById('adminBrand').value;
+    const name = document.getElementById('adminName').value.trim();
+    const price = document.getElementById('adminPrice').value.trim();
+    const type = document.getElementById('adminType').value;
+
+    if (!brand || !name || !price || !type) {
+      alert('يرجى ملء جميع الحقول');
+      return;
     }
 
-    const prices = {
-      realme: {
-        "realme 7i": 13000, "c17": 13000, "realme 5": 13000, "realme 5i": 13000,
-        "realme 6i": 13000, "c3": 13000, "narzo 10a": 13000, "narzo 20a": 13000,
-        "c55": 16000, "c67 5g": 16000, "realme 11 5g": 16000, "realme 11x 5g": 16000,
-        "narzo n55": 16000, "c51": 13000, "c53": 13000, "narzo n53": 13000,
-        "realme not 50": 13000, "c60": 13000, "realme 8 incel": 14000,
-        "realme 8 pro": 14000, "realme 7 pro": 14000, "realme 6": 16000,
-        "realme 7": 16000, "c67 4g": 15000, "c65 5g": 15000, "c65 4g": 15000,
-        "narzo n65 5g": 15000, "realme 12 5g": 15000, "realme 12x 5g": 15000,
-        "narzo 70x 5g": 15000, "realme 13 5g": 15000, "c30s": 14000,
-        "narzo 50i prime": 14000, "c25": 13000, "c25s": 13000, "c11 2021": 13000,
-        "c20": 13000, "c21": 13000, "narzo 50i": 13000, "c33": 13000, "c30": 13000,
-        "c12": 12000, "c15": 12000, "c11 2020": 12000
-      },
-      oppo: {
-        "oppo a53": 13000, "oppo a32": 13000, "oppo a33": 13000, "oppo a53s": 13000,
-        "oppo a5": 13000, "oppo a9": 13000, "oppo a12": 13000, "oppo a31": 13000,
-        "oppo a11": 13000, "oppo a51": 13000, "oppo a15": 12000, "oppo a15s": 12000,
-        "oppo a58 4g": 16000, "oppo a16": 12000, "oppo a16k": 12000, "oppo a16s": 12000,
-        "oppo a54s": 12000, "oppo a56": 12000, "oppo a55 5g": 12000, "oppo a94": 14000,
-        "oppo a95": 14000, "oppo a18": 14000, "oppo a17": 14000, "oppo a28": 14000,
-        "oppo a57": 14000, "oppo a58": 14000, "oppo a76": 14000, "oppo a77": 14000,
-        "oppo a77s": 14000, "oppo a78": 14000, "oppo a38": 14000, "oppo a17k": 14000,
-        "oppo a97": 14000, "oppo a57s": 14000, "oppo a60": 15000
-      }
-    };
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify({ brand, name, price, type, action: "add" }),
+      });
+      const result = await res.json();
+      alert(result.status === 'success' ? 'تمت الإضافة بنجاح' : 'فشل في الإضافة: ' + (result.message || 'خطأ غير معروف'));
 
-    function searchPrice(query) {
-      const resultDiv = document.getElementById("result");
-      const value = query.trim().toLowerCase();
-      resultDiv.innerHTML = '';
+      document.getElementById('adminBrand').selectedIndex = 0;
+      document.getElementById('adminName').value = '';
+      document.getElementById('adminPrice').value = '';
+      document.getElementById('adminType').selectedIndex = 0;
 
-      if (!value) return;
-
-      const list = prices[selectedCompany] || {};
-      const match = Object.entries(list).filter(([model]) =>
-        model.toLowerCase().startsWith(value)
-      );
-
-      if (match.length > 0) {
-        const [model, price] = match[0];
-        resultDiv.textContent = `${model} - ${price.toLocaleString()} دينار عراقي`;
-      }
+      fetchData();
+    } catch (error) {
+      console.error("Error adding item:", error);
+      alert("حدث خطأ أثناء إضافة العنصر. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.");
     }
-  </script>
+  }
+
+  function openAdmin() {
+    const code = prompt('أدخل رمز الدخول:');
+    if (code === '144798') {
+      document.getElementById('customerPage').style.display = 'none';
+      document.getElementById('adminPage').style.display = 'block';
+      fetchData();
+    } else {
+      alert('رمز خاطئ');
+    }
+  }
+
+  function closeAdmin() {
+    document.getElementById('adminPage').style.display = 'none';
+    document.getElementById('customerPage').style.display = 'block';
+    fetchData();
+  }
+
+  function renderAdminList() {
+    const adminList = document.getElementById('adminList');
+    if (!adminList) return;
+    adminList.innerHTML = '';
+    
+    const adminQuery = document.getElementById('adminSearchInput').value.toLowerCase();
+
+    const filteredData = allData.slice(1).filter(row => {
+      if (row.length < 4) return false;
+      const itemName = row[0];
+      const itemBrand = row[3];
+      return clean(itemName).includes(clean(adminQuery)) || clean(itemBrand).includes(clean(adminQuery));
+    });
+
+    if (filteredData.length === 0) {
+      adminList.innerHTML = '<p style="text-align:center; color:#888; padding:1rem;">لا توجد نتائج مطابقة لبحثك.</p>';
+      return;
+    }
+
+    const headerRow = document.createElement('div');
+    headerRow.className = 'admin-list-header';
+    headerRow.innerHTML = `
+      <div>الاسم</div>
+      <div>السعر</div>
+      <div>النوع</div>
+      <div>الشركة</div>
+      <div>تعديل</div>
+      <div>حذف</div>
+    `;
+    adminList.appendChild(headerRow);
+
+    filteredData.forEach((row, i) => {
+      const originalIndex = allData.indexOf(row);
+      if (row.length < 4) return;
+      const [name, price, type, brand] = row;
+
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'admin-list-row';
+
+      rowDiv.innerHTML = `
+        <div>${name}</div>
+        <div>${formatPrice(price)}</div>
+        <div>${type}</div>
+        <div>${brand}</div>
+        <div><button class="button btn-action btn-edit" onclick="editItem(${originalIndex - 1})">تعديل</button></div>
+        <div><button class="button btn-action btn-delete" onclick="deleteItem(${originalIndex - 1})">حذف</button></div>
+      `;
+
+      adminList.appendChild(rowDiv);
+    });
+  }
+
+  async function editItem(index) {
+    const item = allData[index + 1];
+    if (!item) return;
+    const [name, oldPrice] = item;
+
+    const newPrice = prompt(`تعديل السعر لـ "${name}" (السعر الحالي: ${oldPrice}):`, oldPrice);
+    if (newPrice === null) return;
+
+    if (newPrice.trim() === "" || isNaN(newPrice)) {
+      alert("يرجى إدخال سعر صالح");
+      return;
+    }
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({ action: "edit", name, price: newPrice, type: item[2], brand: item[3] }),
+      });
+      const result = await res.json();
+      alert(result.status === 'success' ? "تم تعديل السعر بنجاح" : "فشل في تعديل السعر: " + (result.message || 'خطأ غير معروف'));
+      fetchData();
+    } catch (error) {
+      console.error("Error editing item:", error);
+      alert("حدث خطأ أثناء تعديل العنصر. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.");
+    }
+  }
+
+  async function deleteItem(index) {
+    const item = allData[index + 1];
+    if (!item) return;
+    const [name, price, type, brand] = item;
+
+    if (!confirm(`هل أنت متأكد من حذف "${name}"؟`)) return;
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({ action: "delete", name, price, type, brand }),
+      });
+      const result = await res.json();
+      alert(result.status === 'success' ? "تم حذف العنصر بنجاح" : "فشل في حذف العنصر: " + (result.message || 'خطأ غير معروف'));
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("حدث خطأ أثناء حذف العنصر. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.");
+    }
+  }
+
+  // Prevent copying, cutting, pasting, right-click, and F12
+  document.addEventListener('copy', e => e.preventDefault());
+  document.addEventListener('cut', e => e.preventDefault());
+  document.addEventListener('paste', e => e.preventDefault());
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey && ['c', 'x', 'v', 'u'].includes(e.key.toLowerCase())) || e.key === 'F12') {
+      e.preventDefault();
+    }
+  });
+
+  window.onload = fetchData;
+</script>
+
 </body>
 </html>
